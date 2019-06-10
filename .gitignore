@@ -59,3 +59,17 @@ typings/
 
 # next.js build output
 .next
+
+# VS Code meta data
+.vscode
+
+# JetBrains IDE meta data
+.idea
+
+# Remove object file and static library
+*.o
+*.a
+main
+libmath.h
+libgoaddon.h
+target
