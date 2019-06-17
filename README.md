@@ -1,6 +1,10 @@
 # Go N-API
 
-This package is a wrapper oiver N-API written in Go.
+This package is a wrapper over N-API written in Go.
+
+If you want know more about all the work behind this module please take a look at
+this repo: 
+- **[Research for N-API](https://github.com/NickNaso/abi-stable-node-research)**
 
 ### Do not install and use it. I published the module to reserve the name, but for now it does not work.
 
