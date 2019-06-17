@@ -16,11 +16,16 @@ import "unsafe"
 
 // Env represents the opaque data structure containing the environment in which
 // the request is being run.
-type Env struct{}
+type Env struct {
+	_env C.napi_env
+}
 
 // Value is a the base data type upon which other JavaScript values such as
 // Number, Boolean, String, and Object are based.
-type Value struct{}
+type Value struct {
+	_env   C.napi_env
+	_value C.napi_value
+}
 
 // Boolean class is a representation of the JavaScript Boolean object.
 type Boolean struct{}
