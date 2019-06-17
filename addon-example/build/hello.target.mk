@@ -167,7 +167,7 @@ LIBTOOLFLAGS_Release := \
 	-Wl,-search_paths_first
 
 LIBS := \
-	/Users/nicoladelgobbo/Desktop/addon-example/libgoaddon.a
+	/Users/nicoladelgobbo/Documents/GitHub/go-napi/addon-example/libgoaddon.a
 
 $(builddir)/hello.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(builddir)/hello.node: LIBS := $(LIBS)
