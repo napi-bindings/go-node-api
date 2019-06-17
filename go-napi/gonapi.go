@@ -12,6 +12,102 @@ package main
 import "C"
 import "unsafe"
 
+// JavaScript API
+
+// Env represents the opaque data structure containing the environment in which
+// the request is being run.
+type Env struct{}
+
+// Value is a the base data type upon which other JavaScript values such as
+// Number, Boolean, String, and Object are based.
+type Value struct{}
+
+// Boolean class is a representation of the JavaScript Boolean object.
+type Boolean struct{}
+
+// Number is a representation of the JavaScript Number object.
+type Number struct{}
+
+// String is a representation of the JavaScript String object.
+type String struct{}
+
+// Name is a representation of the JavaScript String or Symbol object.
+type Name struct{}
+
+// Symbol is a representation of the JavaScript Symbol object.
+type Symbol struct{}
+
+// Object is
+type Object struct{}
+
+// Array iss
+type Array struct{}
+
+// Function is
+type Function struct{}
+
+// Buffer is
+type Buffer struct{}
+
+// Error is
+type Error struct{}
+
+// PropertyDescriptor is
+type PropertyDescriptor struct{}
+
+// ClassPropertyDescriptor is
+type ClassPropertyDescriptor struct{}
+
+// ObjectPropertyDescriptor is
+type ObjectPropertyDescriptor struct{}
+
+// CallbackInfo is
+type CallbackInfo struct{}
+
+// Reference is
+type Reference struct{}
+
+// TypedArray is
+type TypedArray struct{}
+
+// ArrayBuffer is
+type ArrayBuffer struct{}
+
+// DataView is
+type DataView struct{}
+
+// Promise is
+type Promise struct{}
+
+// ObjectReference is
+type ObjectReference struct{}
+
+// FunctionReference is
+type FunctionReference struct{}
+
+// ObjectWrap iss
+type ObjectWrap struct{}
+
+// HandleScope is
+type HandleScope struct{}
+
+// EscapableHandleScope iss
+type EscapableHandleScope struct{}
+
+// CallbackScope is
+type CallbackScope struct{}
+
+// MemoryManagement is
+type MemoryManagement struct{}
+
+// Runtime API
+
+// AsyncContext is
+type AsyncContext struct{}
+
+// AsyncWorker is
+type AsyncWorker struct{}
+
 // Caller contains a callback to call
 type Caller struct{}
 
@@ -46,4 +142,4 @@ func Initialize(env C.napi_env, exports C.napi_value) C.napi_value {
 	return exports
 }
 
-func main () {}
+func main() {}
