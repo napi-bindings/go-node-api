@@ -6,6 +6,8 @@ If you want to know more about all the work behind this module please take a loo
 followings repo: 
 - **[Research for N-API](https://github.com/NickNaso/abi-stable-node-research)**
 
+Take a look at the low level Go binding to N-API called go-napi-sys: https://github.com/NickNaso/go-napi-sys
+
 ### Do not install and use it. I published the module to reserve the name, but for now it does not work.
 
 ## This module is under development yet :-) 
