@@ -1,12 +1,10 @@
-# Go N-API
+# go-napi
 
-This package is a wrapper over N-API written in Go.
+This package is a wrapper over Node-API written in Go.
 
 If you want to know more about all the work behind this module please take a look at
 followings repo: 
-- **[Research for N-API](https://github.com/napi-bindings/abi-stable-node-research)**
-
-Take a look at the low level Go binding to N-API called **go-napi-sys**: https://github.com/napi-bindings/go-napi-sys
+- **[Research for Node-API](https://github.com/napi-bindings/abi-stable-node-research)**
 
 ### Do not install and use it. I published the module to reserve the name, but for now it does not work.
 
