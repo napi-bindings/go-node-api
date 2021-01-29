@@ -1,4 +1,4 @@
-# go-napi
+# go-node-api
 
 This package is a wrapper over Node-API written in Go.
 
