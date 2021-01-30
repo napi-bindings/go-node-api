@@ -1,3 +1,3 @@
-module github.com/napi-bindings/go-napi
+module github.com/napi-bindings/go-node-api
 
 go 1.15
