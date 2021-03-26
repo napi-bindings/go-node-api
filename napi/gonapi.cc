@@ -2,6 +2,6 @@
 
 #include "_cgo_export.h"
 
-extern "C" { 
+extern "C" {
 
 }

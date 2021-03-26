@@ -20,8 +20,8 @@ import "C"
 // contain Node-API libraries and headers which otherwise would be ignored.
 // DO NOT REMOVE
 import (
-	_ "github.com/napi-bindings/go-node-api/deps/include"
-	_ "github.com/napi-bindings/go-node-api/deps/lib/darwin"
-	_ "github.com/napi-bindings/go-node-api/deps/lib/linux"
-	_ "github.com/napi-bindings/go-node-api/deps/lib/windows"
+	_ "github.com/napi-bindings/go-node-api/napi/deps/include"
+	_ "github.com/napi-bindings/go-node-api/napi/deps/lib/darwin"
+	_ "github.com/napi-bindings/go-node-api/napi/deps/lib/linux"
+	_ "github.com/napi-bindings/go-node-api/napi/deps/lib/windows"
 )
