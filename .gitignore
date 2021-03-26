@@ -1,1 +1,7 @@
 *.DS_Store
+
+# Metadata for IntelliJ IDEA IDEs
+.idea
+
+# Metadata for VSCode
+.vscode
