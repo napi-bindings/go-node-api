@@ -78,7 +78,7 @@ napi_finalize FinalizeCallback(void* caller) {
   return cb();
 }
 
-extern napi_threadsafe_function_call_js ThreadsafeFunctionCallback(void* caller) {
+napi_threadsafe_function_call_js ThreadsafeFunctionCallback(void* caller) {
   ThreadsafeFunctionCallbackWrap cb{caller};
   return cb();
 }
