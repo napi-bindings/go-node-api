@@ -1,19 +1,6 @@
 #ifndef GO_NAPI_H
 #define GO_NAPI_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <node_api.h>
-
-#ifdef __cplusplus
-}  // extern "C"
-#endif
-
-#ifndef GO_NAPI_H
-#define GO_NAPI_H
-
 #include <node_api.h>
 
 #ifdef __cplusplus
@@ -29,7 +16,5 @@ extern napi_threadsafe_function_call_js ThreadsafeFunctionCallback(void* caller)
 #ifdef __cplusplus
 }  // extern "C"
 #endif
-
-#endif  // GO_NAPI_H
 
 #endif  // GO_NAPI_H
