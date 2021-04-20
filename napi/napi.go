@@ -17,6 +17,8 @@ package napi
 import "C"
 import (
 	"bytes"
+	"fmt"
+	"time"
 	"unsafe"
 )
 
@@ -1826,6 +1828,13 @@ func DeleteElement(env Env, object Value, index uint) (bool, Status) {
 	return bool(res), Status(status)
 }
 
+func unixNano(env Env, info CallbackInfo) Value {
+	fmt.Println("unixNano ...")
+	now := time.Now()
+	value, _ := CreateInt64(env, now.UnixNano())
+	return value
+}
+
 // DefineProperties function allows the efficient definition of multiple
 // properties on a given object. The properties are defined using property
 // descriptors.
@@ -1840,9 +1849,26 @@ func DeleteElement(env Env, object Value, index uint) (bool, Status) {
 func DefineProperties(env Env, value Value, properties []Property) Status {
 	raw := make([]PropertyDescriptor, len(properties))
 	for i := range properties {
-		prop := properties[i].getRaw()
-		raw[i] = prop
+		properties[i].getRaw()
+		//raw[i] = prop
 	}
+	name := C.CString("unixNano")
+	defer C.free(unsafe.Pointer(name))
+	hello, _ := CreateStringUtf8(env, "hello")
+	caller := &Caller{
+		Cb: unixNano,
+	}
+	desc := PropertyDescriptor{
+		utf8name:   name,
+		name:       nil,
+		method:     C.Callback(unsafe.Pointer(caller)),
+		getter:     nil,
+		setter:     nil,
+		value:      hello,
+		attributes: C.napi_default,
+		data:       nil,
+	}
+	raw[0] = desc
 	var props = (unsafe.Pointer(&raw[0]))
 	var status = C.napi_define_properties(env, value, C.size_t(len(properties)), (*C.napi_property_descriptor)(props))
 	return Status(status)
@@ -2622,7 +2648,7 @@ func (prop *Property) getRaw() PropertyDescriptor {
 	desc := PropertyDescriptor{
 		utf8name:   name,
 		name:       nil,
-		method:     (Callback)(C.Callback(unsafe.Pointer(prop.Method))), //nil,
+		method:     nil, //(Callback)(C.Callback(unsafe.Pointer(prop.Method))), //nil,
 		getter:     nil,
 		setter:     nil,
 		value:      nil,

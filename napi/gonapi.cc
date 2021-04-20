@@ -1,18 +1,28 @@
 #include "gonapi.h"
+#include <stdio.h>
+#include <utility>
+#include <vector>
+#include <cassert>
 
 #include "_cgo_export.h"
 
-struct CallbackWrap {
-  CallbackWrap(void* data) : data{data} {}
-  napi_callback operator()() {
-    static auto dataCopy = data;
-    return [](napi_env env, napi_callback_info info) -> napi_value {
-        return CallCallback(dataCopy, env, info);
-    };
-  }
-  void* data;
+
+napi_value MethodP(napi_env env, napi_callback_info info) {
+    napi_status status;
+    napi_value world;
+    status = napi_create_string_utf8(env, "world", 5, &world);
+    assert(status == napi_ok);
+        return world;
+}
+
+struct Context{
+    void* data;
+    Context(void* data) : data(data) {}
 };
 
+static std::vector<Context*> m;
+
+static std::vector<void*> registry{};
 struct AsyncExecuteCallbackWrap {
   AsyncExecuteCallbackWrap(void* data) : data{data} {}
   napi_async_execute_callback operator()() {
@@ -57,9 +67,35 @@ struct ThreadsafeFunctionCallbackWrap {
   void* data;
 };
 
+struct CallbackWrap {
+  CallbackWrap(void* data) : data{data} {}
+  static inline
+  napi_value Wrapper(napi_env env, napi_callback_info info) {
+    printf("Registry %p\n", registry[0]);
+    return CallCallback(registry[0], env, info);
+  }
+  napi_callback operator()() {
+    return [](napi_env env, napi_callback_info info) -> napi_value {
+        return CallCallback(registry[0], env, info);
+    };
+  }
+  void* data;
+};
+
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 napi_callback Callback(void* caller) {
-  CallbackWrap cb{caller};
-  return cb();
+  printf("Callback called\n");
+  registry.push_back(caller);
+  printf("Registry %p\n", registry[0]);
+  return [](napi_env env, napi_callback_info info) -> napi_value {
+        return CallCallback(registry[0], env, info);
+    };
 }
 
 napi_async_execute_callback AsyncExecuteCallback(void* caller) {
@@ -82,3 +118,8 @@ napi_threadsafe_function_call_js ThreadsafeFunctionCallback(void* caller) {
   ThreadsafeFunctionCallbackWrap cb{caller};
   return cb();
 }
+
+
+#ifdef __cplusplus
+}  // extern "C"
+#endif

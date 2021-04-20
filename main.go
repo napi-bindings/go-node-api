@@ -4,6 +4,7 @@ import (
 	"C"
 )
 import (
+	"fmt"
 	"time"
 	"unsafe"
 
@@ -11,6 +12,7 @@ import (
 )
 
 func unixNano(env napi.Env, info napi.CallbackInfo) napi.Value {
+	fmt.Println("unixNano ...")
 	now := time.Now()
 	value, _ := napi.CreateInt64(env, now.UnixNano())
 	return value
@@ -18,6 +20,7 @@ func unixNano(env napi.Env, info napi.CallbackInfo) napi.Value {
 
 //export Initialize
 func Initialize(env unsafe.Pointer, exports unsafe.Pointer) unsafe.Pointer {
+	fmt.Println("Initialize ...")
 	caller := &napi.Caller{
 		Cb: unixNano,
 	}
