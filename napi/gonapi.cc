@@ -88,15 +88,18 @@ struct CallbackWrap {
 extern "C" {
 #endif
 
+napi_value InvokeGoHandler(napi_env env, napi_callback_info info) {
+  return GoHandler(env, info);
+}
 
-napi_callback Callback(void* caller) {
+/*napi_callback Callback(void* caller) {
   printf("Callback called\n");
   registry.push_back(caller);
   printf("Registry %p\n", registry[0]);
   return [](napi_env env, napi_callback_info info) -> napi_value {
         return CallCallback(registry[0], env, info);
     };
-}
+}*/
 
 napi_async_execute_callback AsyncExecuteCallback(void* caller) {
   AsyncExecuteCallbackWrap cb{caller};

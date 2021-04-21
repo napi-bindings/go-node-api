@@ -1835,17 +1835,21 @@ func unixNano(env Env, info CallbackInfo) Value {
 	return value
 }
 
-// DefineProperties function allows the efficient definition of multiple
-// properties on a given object. The properties are defined using property
-// descriptors.
-// Given an array of such property descriptors, this function will set the
-// properties on the object one at a time, as defined by DefineOwnProperty()
-// described in Section 9.1.6 of the ECMA262 specification.
-// [in] env: The environment that the N-API call is invoked under.
-// [in] object: The object from which to retrieve the properties.
-// [in] property_count: The number of elements in the properties array.
-// [in] properties: The array of property descriptors.
-// N-API version: 1
+type Ctx struct {
+	caller *Caller
+	env    Env
+}
+
+var ctxMap = make(map[C.napi_env]Ctx)
+
+//export GoHandler
+func GoHandler(env C.napi_env, info C.napi_callback_info) C.napi_value {
+	fmt.Printf("Env in GoHandler %p\n", env)
+	ctx := ctxMap[env]
+	caller := ctx.caller
+	return (C.napi_value)(caller.Cb(Env(env), CallbackInfo(info)))
+}
+
 func DefineProperties(env Env, value Value, properties []Property) Status {
 	raw := make([]PropertyDescriptor, len(properties))
 	for i := range properties {
@@ -1858,10 +1862,15 @@ func DefineProperties(env Env, value Value, properties []Property) Status {
 	caller := &Caller{
 		Cb: unixNano,
 	}
+	ctxMap[env] = Ctx{
+		caller: caller,
+		env:    env,
+	}
+	fmt.Printf("Env in define %p\n", env)
 	desc := PropertyDescriptor{
 		utf8name:   name,
 		name:       nil,
-		method:     C.Callback(unsafe.Pointer(caller)),
+		method:     (Callback)(unsafe.Pointer(C.InvokeGoHandler)),
 		getter:     nil,
 		setter:     nil,
 		value:      hello,
@@ -1922,13 +1931,14 @@ func CallFunction(env Env, receiver Value, function Value, arguments []Value) (V
 // function when invoked later.
 // N-API version: 1
 func CreateFunction(env Env, name string, cb CCallback) (Value, Status) {
-	caller := &Caller{
+	/*caller := &Caller{
 		Cb: cb,
-	}
+	}*/
 	var res C.napi_value
-	var cname = C.CString(name)
+	/*var cname = C.CString(name)
 	defer C.free(unsafe.Pointer(cname))
-	var status = C.napi_create_function(env, cname, C.NAPI_AUTO_LENGTH, (Callback)(C.Callback(unsafe.Pointer(caller))), nil, &res)
+	var status = C.napi_create_function(env, cname, C.NAPI_AUTO_LENGTH, (Callback)(C.Callback(unsafe.Pointer(caller))), nil, &res)*/
+	var status = C.napi_ok
 	return Value(res), Status(status)
 }
 
