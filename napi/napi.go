@@ -1858,7 +1858,7 @@ func DefineProperties(env Env, value Value, properties []Property) Status {
 	}
 	name := C.CString("unixNano")
 	defer C.free(unsafe.Pointer(name))
-	hello, _ := CreateStringUtf8(env, "hello")
+	//hello, _ := CreateStringUtf8(env, "hello")
 	caller := &Caller{
 		Cb: unixNano,
 	}
@@ -1873,7 +1873,7 @@ func DefineProperties(env Env, value Value, properties []Property) Status {
 		method:     (Callback)(unsafe.Pointer(C.InvokeGoHandler)),
 		getter:     nil,
 		setter:     nil,
-		value:      hello,
+		value:      nil,
 		attributes: C.napi_default,
 		data:       nil,
 	}
